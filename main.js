@@ -14,7 +14,8 @@ const scene =  new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000);
 const bg = document.querySelector("#bg");
 const renderer = new THREE.WebGLRenderer({
-  canvas: bg
+  canvas: bg,
+  alpha: true
 });
 
 //Tomando la medida del padre #app para mantener el canvas dentro del elemento
@@ -25,8 +26,8 @@ console.log(window.devicePixelRatio)
 renderer.setSize(window.innerWidth * 0.6,window.innerHeight * 0.6);
 camera.position.setZ(30);
 
-const colorFondo = new THREE.Color(0xAAAAAA);
-scene.background = colorFondo;
+const colorFondo = new THREE.Color(0xbdb4a5);
+//scene.background = colorFondo;
 
 const caraTexture = new THREE.TextureLoader().load('./assets/pesofrente.jpg');
 const cantoTexture = new THREE.TextureLoader().load('./assets/pesocanto.jpg');
