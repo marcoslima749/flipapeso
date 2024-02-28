@@ -1,6 +1,6 @@
 import "./style.css";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+//import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 import { gsap } from "gsap";
 
@@ -100,6 +100,60 @@ const cleanResultado = () => {
   resultado.textContent = resultado.textContent.replace(/[\!\¡]/g, "");
 };
 
+const audio = document.getElementById("audio");
+const botonMute = document.getElementById("mute");
+const botonUnmute = document.getElementById("unmute");
+
+const stopSound = () => {
+  audio.pause();
+  audio.currentTime = 0;
+};
+
+const playSoundAtSecond = (startSecond) => {
+  if (!audio.paused) {
+    stopSound();
+  }
+  audio.currentTime = startSecond;
+  audio.play();
+};
+
+const stopSoundAfterAWhile = () => {
+  if (audio.currentTime > 0.7) {
+    stopSound();
+  }
+};
+
+const addStopListener = () => {
+  audio.addEventListener("timeupdate", stopSoundAfterAWhile);
+};
+const removeStopListener = () => {
+  audio.removeEventListener("timeupdate", stopSoundAfterAWhile);
+};
+
+const coinTossSound = () => {
+  playSoundAtSecond(0);
+  addStopListener();
+};
+
+const coinFallSound = () => {
+  removeStopListener();
+  playSoundAtSecond(1.06);
+};
+
+const toggleMute = () => {
+  audio.muted = !audio.muted;
+  if (audio.muted) {
+    botonUnmute.style.display = "none";
+    botonMute.style.display = "inline-flex";
+  } else {
+    botonUnmute.style.display = "inline-flex";
+    botonMute.style.display = "none";
+  }
+};
+
+botonMute.addEventListener("click", toggleMute);
+botonUnmute.addEventListener("click", toggleMute);
+
 bg.addEventListener("click", () => {
   if (girando) {
     return;
@@ -108,16 +162,17 @@ bg.addEventListener("click", () => {
 
   cleanResultado();
   flip();
-
+  coinTossSound();
   const tl = gsap.timeline();
 
   tl.to(moneda.rotation, {
-    duration: 1,
+    duration: 0.9,
     z:
       esCara === tiroAnterior
         ? moneda.rotation.z + 360 / 57.2958
         : moneda.rotation.z + (360 + 180) / 57.2958,
     onComplete: () => {
+      coinFallSound();
       updateResultado();
       moneda.rotation.z = esCara ? 0 : 180 / 57.2958;
       tiroAnterior = esCara;
