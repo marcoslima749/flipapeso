@@ -33,13 +33,13 @@ camera.position.setZ(30);
 const colorFondo = new THREE.Color(0xbdb4a5);
 //scene.background = colorFondo;
 
-const caraTexture = new THREE.TextureLoader().load("./assets/pesofrente.jpg");
-const cantoTexture = new THREE.TextureLoader().load("./assets/pesocanto.jpg");
-const secaTexture = new THREE.TextureLoader().load("./assets/pesodorso.jpg");
+const caraTexture = new THREE.TextureLoader().load("./pesofrente.jpg");
+const cantoTexture = new THREE.TextureLoader().load("./pesocanto.jpg");
+const secaTexture = new THREE.TextureLoader().load("./pesodorso.jpg");
 
-const caraBump = new THREE.TextureLoader().load("./assets/pesofrentebump.jpg");
-const secaBump = new THREE.TextureLoader().load("./assets/pesodorsobump.jpg");
-const cantoBump = new THREE.TextureLoader().load("./assets/pesocantobump.jpg");
+const caraBump = new THREE.TextureLoader().load("./pesofrentebump.jpg");
+const secaBump = new THREE.TextureLoader().load("./pesodorsobump.jpg");
+const cantoBump = new THREE.TextureLoader().load("./pesocantobump.jpg");
 
 const geometry = new THREE.CylinderGeometry(10, 10, 2);
 const cara = new THREE.MeshStandardMaterial({
