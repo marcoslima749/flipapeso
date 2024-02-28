@@ -2,34 +2,38 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arvo', serif;
 }
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
 }
 
+html {
+  height: 100%;
+}
+
 :root {
-  --flax:#e8cd7a;
-  --khaki:#b3a895;
-  --khaki2:#bdb4a5;
-  --dim-gray:#6a6459;
-  --flax2:#e3c67a;
-  --platinum:#dfe2e7;
-  --anti-flash-white:#f3f7fa;
-  --raw-umber:#9c6130;
-  --xanthous:#f5b236;
-  --ruddy-blue:#6ba7e6;
+  --flax: #e8cd7a;
+  --khaki: #b3a895;
+  --khaki2: #bdb4a5;
+  --dim-gray: #6a6459;
+  --flax2: #e3c67a;
+  --platinum: #dfe2e7;
+  --anti-flash-white: #f3f7fa;
+  --raw-umber: #9c6130;
+  --xanthous: #f5b236;
+  --ruddy-blue: #6ba7e6;
 }
 
 body {
-  *background: linear-gradient(45deg, var(--anti-flash-white) , var( --ruddy-blue));
-  background-color: var(--anti-flash-white);
+  background-color: #d6d6d6;
+  background-image: url("./assets/iStock-1448924148.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-
 #app {
-  margin-top: 20px;
   width: 80%;
   margin-inline: auto;
   display: flex;
@@ -40,14 +44,18 @@ body {
   padding-inline: 20px;
 }
 
-h1,#leyenda,#resultado {
+h1,
+#leyenda,
+#resultado {
   user-select: none;
-  color: var(--dim-gray);
+  color: #3d3024;
+  filter: drop-shadow(0px 16px 32px var(--anti-flash-white));
 }
 
 h1 {
-  margin-top: 20px;
-  font-size: 3rem;
+  margin-top: 40px;
+  font-size: 4rem;
+  text-align: center;
 }
 
 #leyenda {
@@ -62,16 +70,11 @@ h1 {
   z-index: 3;
 }
 
-#canvas-container{
+#canvas-container {
   margin-top: 20px;
-  *border: 5px solid var(--ruddy-blue);
   border-radius: 5px;
-  *box-shadow:var(--xanthous) 7px 3px 0px;
-  *width: 224px;
-  *height: 364px;
   padding: 10px;
 }
-
 
 #bg {
   z-index: 2;
@@ -79,57 +82,39 @@ h1 {
   filter: drop-shadow(0px 16px 32px var(--dim-gray));
 }
 
+.IM-Fell-English-SC {
+  font-family: "IM Fell English SC", serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
+.marcellus-sc-regular {
+  font-family: "Marcellus SC", serif;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 1px;
+}
 
+.mate-sc-regular {
+  font-family: "Mate SC", serif;
+  font-weight: 700;
+  font-style: normal;
+}
 
+@media screen and (max-width: 605px) {
+  #canvas-container {
+    margin-top: 0;
+  }
+  #bg {
+    margin-top: -72px;
+  }
 
-/*
-- Tailwind
+  html {
+    height: 100%;
+  }
 
-{ 'flax': { DEFAULT: '#e8cd7a', 100: '#3c300a', 200: '#785f14', 300: '#b58f1f', 400: '#deb53c', 500: '#e8cd7a', 600: '#edd693', 700: '#f1e0ae', 800: '#f6ebc9', 900: '#faf5e4' }, 'khaki': { DEFAULT: '#b3a895', 100: '#26221b', 200: '#4c4437', 300: '#726652', 400: '#96886f', 500: '#b3a895', 600: '#c1b9aa', 700: '#d1cabf', 800: '#e0dcd4', 900: '#f0edea' }, 'khaki': { DEFAULT: '#bdb4a5', 100: '#28251e', 200: '#51493c', 300: '#796e5a', 400: '#9e917c', 500: '#bdb4a5', 600: '#c9c2b6', 700: '#d7d1c8', 800: '#e4e1db', 900: '#f2f0ed' }, 'dim_gray': { DEFAULT: '#6a6459', 100: '#151412', 200: '#2a2823', 300: '#3f3c35', 400: '#545047', 500: '#6a6459', 600: '#8c8475', 700: '#a9a398', 800: '#c5c1ba', 900: '#e2e0dd' }, 'flax': { DEFAULT: '#e3c67a', 100: '#392c0c', 200: '#725918', 300: '#ac8524', 400: '#d6ab3f', 500: '#e3c67a', 600: '#e8d093', 700: '#eedcae', 800: '#f4e8c9', 900: '#f9f3e4' } }
-
-- CSV
-
-e8cd7a,b3a895,bdb4a5,6a6459,e3c67a
-
-- With #
-
-#e8cd7a, #b3a895, #bdb4a5, #6a6459, #e3c67a
-
-- Array
-
-["e8cd7a","b3a895","bdb4a5","6a6459","e3c67a"]
-
-- Object
-
-{"Flax":"e8cd7a","Khaki":"b3a895","Khaki 2":"bdb4a5","Dim gray":"6a6459","Flax 2":"e3c67a"}
-
-- Extended Array
-
-[{"name":"Flax","hex":"e8cd7a","rgb":[232,205,122],"cmyk":[0,12,47,9],"hsb":[45,47,91],"hsl":[45,71,69],"lab":[83,-1,45]},{"name":"Khaki","hex":"b3a895","rgb":[179,168,149],"cmyk":[0,6,17,30],"hsb":[38,17,70],"hsl":[38,16,64],"lab":[69,1,11]},{"name":"Khaki","hex":"bdb4a5","rgb":[189,180,165],"cmyk":[0,5,13,26],"hsb":[38,13,74],"hsl":[38,15,69],"lab":[74,1,9]},{"name":"Dim gray","hex":"6a6459","rgb":[106,100,89],"cmyk":[0,6,16,58],"hsb":[39,16,42],"hsl":[39,9,38],"lab":[43,0,7]},{"name":"Flax","hex":"e3c67a","rgb":[227,198,122],"cmyk":[0,13,46,11],"hsb":[43,46,89],"hsl":[43,65,68],"lab":[81,0,42]}]
-
-- XML
-
-<palette>
-  <color name="Flax" hex="e8cd7a" r="232" g="205" b="122" />
-  <color name="Khaki" hex="b3a895" r="179" g="168" b="149" />
-  <color name="Khaki" hex="bdb4a5" r="189" g="180" b="165" />
-  <color name="Dim gray" hex="6a6459" r="106" g="100" b="89" />
-  <color name="Flax" hex="e3c67a" r="227" g="198" b="122" />
-</palette>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{"Platinum":"dfe2e7","Anti-flash white":"f3f7fa","Raw umber":"9c6130","Xanthous":"f5b236","Ruddy Blue":"6ba7e6"}
-*/
+  #resultado {
+    filter: drop-shadow(0px 16px 32px var(--anti-flash-white))
+      drop-shadow(0px 16px 32px var(--anti-flash-white));
+  }
+}

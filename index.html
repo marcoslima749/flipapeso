@@ -1,25 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpg" href="/assets/pesofrente.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Arvo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arvo&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alegreya+SC:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400;1,500;1,700;1,800;1,900&family=Bellefair&family=Cormorant+SC:wght@300;400;500;600;700&family=IM+Fell+Double+Pica+SC&family=IM+Fell+Double+Pica:ital@0;1&family=IM+Fell+English+SC&family=Kanit:ital,wght@0,400;0,700;1,400;1,700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Marcellus+SC&family=Mate+SC&family=Patrick+Hand+SC&family=Patua+One&family=Rubik:ital,wght@0,400;0,700;0,800;1,400&family=Vidaloka&family=Vollkorn+SC:wght@400;600;700;900&family=Yeseva+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
     <title>Tira la moneda</title>
   </head>
   <body>
     <div id="app">
-      <h1>¡Tirá la moneda!</h1>
-      <h2 id="leyenda">(tocá la moneda para decidir tu destino... muajajaj)</h2>
+      <h1 class="IM-Fell-English-SC">¡Tirá la moneda!</h1>
+      <h2 id="leyenda" class="mate-sc-regular">
+        (tocá la moneda para decidir tu destino... muajajaj)
+      </h2>
       <div id="canvas-container">
-        <canvas id="bg">
-        </canvas>
+        <canvas id="bg"> </canvas>
       </div>
-      <h2 id="resultado">CARA</h2>
-      
+      <h2 id="resultado" class="marcellus-sc-regular">CARA</h2>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
