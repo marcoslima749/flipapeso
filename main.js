@@ -1,37 +1,25 @@
 import "./style.css";
 import * as THREE from "three";
-//import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
 import { gsap } from "gsap";
 
-import { CustomEase } from "gsap/CustomEase";
-import { RoughEase, ExpoScaleEase, SlowMo } from "gsap/EasePack";
 
-gsap.registerPlugin(RoughEase, ExpoScaleEase, SlowMo, CustomEase);
-
+//Setea la escena, tamaños y aspecto
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
 const bg = document.querySelector("#bg");
 const renderer = new THREE.WebGLRenderer({
   canvas: bg,
   alpha: true,
 });
 
-//Tomando la medida del padre #app para mantener el canvas dentro del elemento
-//let anchoApp = document.getElementById("app").offsetWidth;
-
 renderer.setPixelRatio(window.devicePixelRatio * 3);
-console.log(window.devicePixelRatio);
-renderer.setSize(window.innerWidth * 0.6, window.innerHeight * 0.6);
-camera.position.setZ(30);
+renderer.setSize(300, 300);
+camera.position.setZ(40);
+camera.aspect = 1 / 1;
+camera.updateProjectionMatrix();
 
-const colorFondo = new THREE.Color(0xbdb4a5);
-//scene.background = colorFondo;
+
+//Carga las texturas de la moneda y crea la geometría
 
 const caraTexture = new THREE.TextureLoader().load("./pesofrente.jpg");
 const cantoTexture = new THREE.TextureLoader().load("./pesocanto.jpg");
@@ -41,7 +29,7 @@ const caraBump = new THREE.TextureLoader().load("./pesofrentebump.jpg");
 const secaBump = new THREE.TextureLoader().load("./pesodorsobump.jpg");
 const cantoBump = new THREE.TextureLoader().load("./pesocantobump.jpg");
 
-const geometry = new THREE.CylinderGeometry(10, 10, 2);
+const geometry = new THREE.CylinderGeometry(15, 15, 3);
 const cara = new THREE.MeshStandardMaterial({
   map: caraTexture,
   bumpMap: caraBump,
@@ -58,7 +46,10 @@ const seca = new THREE.MeshStandardMaterial({
   bumpScale: 1.6,
 });
 const materials = [canto, cara, seca];
+
 const moneda = new THREE.Mesh(geometry, materials);
+
+//Rota "el cilindro" para ver la moneda de frente
 moneda.rotation.x = 90 / 57.2958; //todos los ángulos están en radianes
 
 scene.add(moneda);
@@ -70,19 +61,8 @@ const ambientLight = new THREE.AmbientLight(0xffffff);
 
 scene.add(pointLight, ambientLight);
 
-//const lightHelper = new THREE.PointLightHelper(pointLight);
-//const gridHelper = new THREE.GridHelper(200,50);
-//scene.add(lightHelper,gridHelper);
 
-//const controls = new OrbitControls(camera,renderer.domElement);
-
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(window.innerWidth * 0.6, window.innerHeight * 0.6);
-});
-
+//Crea la lógica del resultado
 const resultado = document.getElementById("resultado");
 let esCara = true;
 let tiroAnterior = true;
@@ -100,6 +80,8 @@ const cleanResultado = () => {
   resultado.textContent = resultado.textContent.replace(/[\!\¡]/g, "");
 };
 
+
+//Crea las funciones para reproducir el audio
 const audio = document.getElementById("audio");
 const botonMute = document.getElementById("mute");
 const botonUnmute = document.getElementById("unmute");
@@ -117,15 +99,20 @@ const playSoundAtSecond = (startSecond) => {
   audio.play();
 };
 
+//Detiene el sonido después de 0.7 segundos para que no suene la caida de la moneda
+//(los dos sonidos están en el mismo audio)
 const stopSoundAfterAWhile = () => {
   if (audio.currentTime > 0.7) {
     stopSound();
   }
 };
 
+//Agrega los listeners para detener el audio
 const addStopListener = () => {
   audio.addEventListener("timeupdate", stopSoundAfterAWhile);
 };
+
+//Remueve el listener si hay que detener el audio para reproducir otro sonido 
 const removeStopListener = () => {
   audio.removeEventListener("timeupdate", stopSoundAfterAWhile);
 };
@@ -140,6 +127,8 @@ const coinFallSound = () => {
   playSoundAtSecond(1.06);
 };
 
+
+//Maneja mutear y desmutear el sonido
 const toggleMute = () => {
   audio.muted = !audio.muted;
   if (audio.muted) {
@@ -154,7 +143,9 @@ const toggleMute = () => {
 botonMute.addEventListener("click", toggleMute);
 botonUnmute.addEventListener("click", toggleMute);
 
-bg.addEventListener("click", () => {
+
+
+const tirarLaMoneda = () => {
   if (girando) {
     return;
   }
@@ -162,7 +153,10 @@ bg.addEventListener("click", () => {
 
   cleanResultado();
   flip();
+
   coinTossSound();
+
+  //anima la moneda
   const tl = gsap.timeline();
 
   tl.to(moneda.rotation, {
@@ -179,6 +173,7 @@ bg.addEventListener("click", () => {
     },
   });
 
+  //Anima el texto del resultado
   tl.to(resultado, { duration: 0.17, fontSize: "32px" });
   tl.to(resultado, {
     duration: 0.17,
@@ -187,14 +182,15 @@ bg.addEventListener("click", () => {
       girando = false;
     },
   });
-});
+
+};
+
+//Agrega el listener con la función para tirar la moneda
+bg.addEventListener("click", tirarLaMoneda);
+
 
 function animate() {
   requestAnimationFrame(animate);
-
-  //moneda.rotation.z += 0.01;
-  //controls.update();
-
   renderer.render(scene, camera);
 }
 
